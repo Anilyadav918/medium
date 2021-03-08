@@ -1,0 +1,15 @@
+/**
+ * @function logger
+ *to log request
+ * @param {} req
+ * @param {} res
+ * @route middleware
+ */
+const logger = (req, res, next) => {
+  console.log(
+    `${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl}`,
+  );
+  next();
+};
+
+module.exports = logger;
