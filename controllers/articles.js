@@ -18,7 +18,11 @@ exports.createArticles = async (req, res, next) => {
     const title = req.body.title;
     const description = req.body.description;
     const body = req.body.body;
-
+    if (!title || !description || !body) {
+      return res
+        .status(400)
+        .json(HttpResponses.BadRequest(null, 'Input field not set'));
+    }
     const articleFromDb = await Article.findOne({title: title});
 
     if (Util.IsNullOrUndefined(articleFromDb)) {
@@ -150,7 +154,11 @@ exports.getArticles = async (req, res, next) => {
 exports.getArticle = async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    if (!id) {
+      return res
+        .status(400)
+        .json(HttpResponses.BadRequest(null, 'Input field not set'));
+    }
     const articleFromDb = await Article.findOne({_id: id});
 
     if (!Util.IsNullOrUndefined(articleFromDb)) {
@@ -189,7 +197,11 @@ exports.getArticle = async (req, res, next) => {
 exports.updateArticles = async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    if (!id) {
+      return res
+        .status(400)
+        .json(HttpResponses.BadRequest(null, 'Input field not set'));
+    }
     const articleFromDb = await Article.findOne({_id: id});
 
     if (!Util.IsNullOrUndefined(articleFromDb)) {
@@ -232,7 +244,11 @@ exports.updateArticles = async (req, res, next) => {
 exports.deleteArticles = async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    if (!id) {
+      return res
+        .status(400)
+        .json(HttpResponses.BadRequest(null, 'Input field not set'));
+    }
     const articleFromDb = await Article.findOne({_id: id});
 
     if (!Util.IsNullOrUndefined(articleFromDb)) {
@@ -272,7 +288,11 @@ exports.deleteArticles = async (req, res, next) => {
 exports.upladPhoto = async (req, res, next) => {
   try {
     const id = req.params.id;
-
+    if (!id) {
+      return res
+        .status(400)
+        .json(HttpResponses.BadRequest(null, 'Input field not set'));
+    }
     const articleFromDb = await Article.findOne({_id: id});
 
     if (Util.IsNullOrUndefined(articleFromDb)) {

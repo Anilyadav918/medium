@@ -11,10 +11,16 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getArticles).post(createArticles);
+const {protect} = require('../middleware/auth');
 
-router.route('/:id').get(getArticle).put(updateArticles).delete(deleteArticles);
+router.route('/').get(getArticles).post(protect, createArticles);
 
-router.route('/:id/photo').put(upladPhoto);
+router
+  .route('/:id')
+  .get(getArticle)
+  .put(protect, updateArticles)
+  .delete(protect, deleteArticles);
+
+router.route('/:id/photo').put(protect, upladPhoto);
 
 module.exports = router;

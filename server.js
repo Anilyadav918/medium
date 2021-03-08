@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 const logger = require('./middleware/logger');
 const errorHandler = require('./middleware/error');
 const morgan = require('morgan');
@@ -14,11 +15,16 @@ connectDB();
 
 //routes files
 const articles = require('./routes/articles');
+const auth = require('./routes/auth');
+const users = require('./routes/users');
+const comments = require('./routes/comments');
 
 const app = express();
 
 //body parser
 app.use(express.json());
+
+app.use(cookieParser());
 
 //middlewares
 app.use(logger);
@@ -35,6 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //MOunt routers
 app.use('/api/v1/articles', articles);
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/user', users);
+app.use('/api/v1/comments', comments);
 
 app.get('/', (req, res) => {
   res.send('hello from server.js');
